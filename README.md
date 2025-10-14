@@ -37,6 +37,7 @@
     <b>🌦️ Global Weather Trends Analyzer</b> — <i>Python, Pandas, Streamlit, PostgreSQL, Docker, REST APIs</i><br>
     ● Built a data pipeline to collect, clean, and process global weather datasets with ETL automation and PostgreSQL storage.<br>
     ● Developed interactive dashboards in <b>Streamlit</b> to visualize weather trends and patterns in real time.<br>
+     <img width="300" height="300" alt="Image" src="https://github.com/user-attachments/assets/538d1611-e725-4d32-893d-d21d55d53f49" />
     🔗 <a href="https://github.com/vinaysai9440/Weather-Api">GitHub Repo</a>
   </li>
   <br>
@@ -45,6 +46,7 @@
     <b>🏏 Cricketer Records Application</b> — <i>Angular, Spring Boot, SQL/MongoDB, REST APIs</i><br>
     ● Developed a full-stack application to analyze and rank cricketer performance data, integrating <b>Spring Boot APIs</b> with an <b>Angular frontend</b>.<br>
     ● Implemented search and ranking algorithms with SQL/MongoDB persistence for fast and scalable insights.<br>
+     <img width="300" height="300" alt="Image" src="https://github.com/user-attachments/assets/c86dce08-b135-4fc2-93d0-504f70eb9fd9" />
     🔗 <a href="https://github.com/vinaysai9440/Records">GitHub Repo</a>
   </li>
   <br>
@@ -53,6 +55,7 @@
     <b>🏦 Core Banking Service</b> — <i>Java (Spring Boot, JPA), MySQL, Flyway</i><br>
     ● Engineered a modular banking system handling accounts, fund transfers, and utility payments with full transaction integrity and rollback handling.<br>
     ● Implemented <b>Spring Boot microservices</b> with JPA for persistence and <b>Flyway</b> for schema versioning.<br>
+    <img width="300" height="300" alt="Image" src="https://github.com/user-attachments/assets/8b427057-d147-4042-8636-e83ccaa45897" />
     🔗 <a href="https://github.com/vinaysai9440/BankingApp">GitHub Repo</a>
   </li>
 </ul>
