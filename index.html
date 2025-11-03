@@ -1,440 +1,371 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Mail, Phone, MapPin, Github, Linkedin } from "lucide-react";
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Vinay | Portfolio</title>
 
-// ---------------------------------
-// Portfolio – Company‑Agnostic Version
-// Fixes:
-// 1) Resolved unmatched JSX tags and stray braces (previous commit).
-// 2) Guarded Node-only globals (process) for browser builds to fix
-//    "ReferenceError: process is not defined".
-// 3) Added extra smoke tests (non-breaking) per instructions.
-// ---------------------------------
+    <!-- Tailwind (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { background: white; }
+    </style>
+  </head>
+  <body class="text-slate-900 antialiased">
+    <div id="root"></div>
 
-// ------------------
-// SITE CONFIG
-// ------------------
-const SITE = {
-  name: "Vinay",
-  role: "Software Developer • Java • React • SQL",
-  tagline:
-    "I build secure, accessible, and performant web applications end‑to‑end — Spring Boot microservices, React front‑ends, optimized SQL, and CI/CD on AWS. I follow ADAA accessibility and OWASP/HIPAA security practices to ship reliable software users love.",
-  ctas: [
-    { label: "View My Work", href: "#work" },
-    { label: "Let's Connect", href: "#contact" },
-  ],
-  stats: [
-    { label: "Years Experience", value: "4+" },
-    { label: "Accessibility", value: "ADAA" },
-    { label: "Security", value: "OWASP/HIPAA" },
-    { label: "Cloud & CI/CD", value: "AWS • Docker • Jenkins" },
-  ],
-  social: [
-    { label: "GitHub", href: "#", icon: <Github size={18} /> },
-    { label: "LinkedIn", href: "#", icon: <Linkedin size={18} /> },
-  ],
-};
+    <!-- React + ReactDOM + libs (browser ESM via esm.sh) -->
+    <script type="module">
+      import React from "https://esm.sh/react@18";
+      import ReactDOM from "https://esm.sh/react-dom@18/client";
+      import { motion } from "https://esm.sh/framer-motion@11";
+      import {
+        ArrowRight,
+        Mail,
+        Phone,
+        MapPin,
+        Github,
+        Linkedin,
+      } from "https://esm.sh/lucide-react@0.468.0";
 
-// ------------------
-// DATA – Projects (company‑agnostic)
-// ------------------
-const PROJECTS = [
-  {
-    title: "Global Weather Trends Analyzer",
-    org: "Personal Project",
-    blurb:
-      "Cross‑cloud data pipeline and visualization app using Python + Streamlit, containerized with Docker, and backed by PostgreSQL. Ingests data from AWS S3, performs analytics, and renders interactive trend dashboards.",
-    tags: ["Python", "Streamlit", "PostgreSQL", "Docker", "AWS", "Azure"],
-    metrics: ["Reproducible Deployments", "Interactive Insights"],
-  },
-  {
-    title: "Cricketer Records Application",
-    org: "Personal Project",
-    blurb:
-      "Full‑stack app with Spring Boot REST APIs and Angular UI that handles ranking algorithms and real‑time updates across SQL and MongoDB stores.",
-    tags: ["Spring Boot", "Angular", "SQL", "MongoDB", "REST API"],
-    metrics: ["Real‑time Updates", "Clean API Design"],
-  },
-  {
-    title: "Secure Healthcare Microservices",
-    org: "Professional Work (Company‑agnostic)",
-    blurb:
-      "Designed and maintained Java EE/Spring Boot microservices for claim processing with strict OWASP/HIPAA compliance, integrated PostgreSQL + MongoDB, and improved query performance.",
-    tags: ["Java", "Spring Boot", "Microservices", "PostgreSQL", "MongoDB", "OWASP", "HIPAA"],
-    metrics: ["↓ Query Time", "Robust Security"],
-  },
-];
+      const SITE = {
+        name: "Vinay",
+        role: "Software Developer • Java • React • SQL",
+        tagline:
+          "I build secure, accessible, and performant web applications end-to-end — Spring Boot microservices, React front-ends, optimized SQL, and CI/CD on AWS. I follow ADAA accessibility and OWASP/HIPAA security practices to ship reliable software users love.",
+        ctas: [
+          { label: "View My Work", href: "#work" },
+          { label: "Let's Connect", href: "#contact" },
+        ],
+        stats: [
+          { label: "Years Experience", value: "4+" },
+          { label: "Accessibility", value: "ADAA" },
+          { label: "Security", value: "OWASP/HIPAA" },
+          { label: "Cloud & CI/CD", value: "AWS • Docker • Jenkins" },
+        ],
+        social: [
+          { label: "GitHub", href: "#", icon: (size=18) => React.createElement(Github, {size}) },
+          { label: "LinkedIn", href: "#", icon: (size=18) => React.createElement(Linkedin, {size}) },
+        ],
+      };
 
-// ------------------
-// DATA – Experience (company‑agnostic)
-// ------------------
-const EXPERIENCE = [
-  {
-    title: "Full‑Stack Developer – Healthcare",
-    dates: "Jan 2025 – Present",
-    bullets: [
-      "Designed, developed, and maintained secure Java EE/Spring Boot microservices for claims, aligning with OWASP and HIPAA.",
-      "Integrated PostgreSQL and MongoDB and optimized SQL to reduce data retrieval time by ~25%.",
-      "Built accessible (ADAA) responsive UI components (Angular, HTML5, CSS3, ES6) for internal dashboards.",
-      "Contributed across environments (dev/test/prod) using TDD, Agile Scrum, Git, and Jenkins.",
-      "Implemented Node.js/GraphQL data services to reduce redundant backend calls by ~20%.",
-      "Supported Salesforce integrations for secure customer data workflows.",
-    ],
-  },
-  {
-    title: "Full‑Stack Developer – FinTech",
-    dates: "Dec 2020 – Aug 2022",
-    bullets: [
-      "Built and enhanced web apps with Java EE, PL/SQL, MyBatis, and jQuery for real‑time data processing and reporting.",
-      "Created ImageRight document workflows to automate routing and improve auditability.",
-      "Delivered performant browser interfaces with HTML5/CSS3/AJAX and improved visual consistency for dashboards.",
-      "Authored batch scripts and automation to validate financial data and increase workflow reliability.",
-      "Practiced solid CI/CD with Git and Jenkins; collaborated in unit testing (JUnit) and code reviews.",
-    ],
-  },
-  {
-    title: "Software Engineer – Health Tech",
-    dates: "Jun 2019 – Dec 2020",
-    bullets: [
-      "Built Spring Boot REST APIs for healthcare data pipelines to improve uptime and interoperability.",
-      "Developed React front‑end modules following accessible UI design and cross‑browser best practices.",
-      "Maintained HIPAA‑compliant data services on AWS (RDS/S3) following OWASP guidance.",
-      "Automated CI/CD with Jenkins and Docker, reducing manual release effort.",
-      "Profiled APIs and optimized code/queries to improve response times.",
-    ],
-  },
-];
+      const PROJECTS = [
+        {
+          title: "Global Weather Trends Analyzer",
+          org: "Personal Project",
+          blurb:
+            "Cross-cloud data pipeline and visualization app using Python + Streamlit, containerized with Docker, and backed by PostgreSQL. Ingests data from AWS S3, performs analytics, and renders interactive trend dashboards.",
+          tags: ["Python", "Streamlit", "PostgreSQL", "Docker", "AWS", "Azure"],
+          metrics: ["Reproducible Deployments", "Interactive Insights"],
+        },
+        {
+          title: "Cricketer Records Application",
+          org: "Personal Project",
+          blurb:
+            "Full-stack app with Spring Boot REST APIs and Angular UI that handles ranking algorithms and real-time updates across SQL and MongoDB stores.",
+          tags: ["Spring Boot", "Angular", "SQL", "MongoDB", "REST API"],
+          metrics: ["Real-time Updates", "Clean API Design"],
+        },
+        {
+          title: "Secure Healthcare Microservices",
+          org: "Professional Work (Company-agnostic)",
+          blurb:
+            "Designed and maintained Java EE/Spring Boot microservices for claim processing with strict OWASP/HIPAA compliance, integrated PostgreSQL + MongoDB, and improved query performance.",
+          tags: ["Java", "Spring Boot", "Microservices", "PostgreSQL", "MongoDB", "OWASP", "HIPAA"],
+          metrics: ["↓ Query Time", "Robust Security"],
+        },
+      ];
 
-// ------------------
-// DATA – Skills
-// ------------------
-const SKILLS = {
-  "Frontend Frameworks": ["React", "Angular", "Vue", "Next.js", "Nuxt.js"],
-  "UI & Styling": ["TailwindCSS", "Material UI", "Bootstrap", "CSS Grid", "Flexbox"],
-  "Design Tools": ["Figma", "Adobe XD", "Sketch", "Storybook", "InVision"],
-  "State Management": ["Redux", "Context API", "NgRx", "Zustand"],
-  "Testing & QA": ["Jest", "Cypress", "Selenium", "Playwright", "Lighthouse"],
-  "Build & Deploy": ["Webpack", "Vite", "Docker", "Jenkins", "GitHub Actions"],
-  Animation: ["GSAP", "Framer Motion", "Lottie"],
-  "Data Visualization": ["D3.js", "Chart.js", "Highcharts"],
-};
+      const EXPERIENCE = [
+        {
+          title: "Full-Stack Developer – Healthcare",
+          dates: "Jan 2025 – Present",
+          bullets: [
+            "Designed, developed, and maintained secure Java EE/Spring Boot microservices for claims, aligning with OWASP and HIPAA.",
+            "Integrated PostgreSQL and MongoDB and optimized SQL to reduce data retrieval time by ~25%.",
+            "Built accessible (ADAA) responsive UI components (Angular, HTML5, CSS3, ES6) for internal dashboards.",
+            "Contributed across environments (dev/test/prod) using TDD, Agile Scrum, Git, and Jenkins.",
+            "Implemented Node.js/GraphQL data services to reduce redundant backend calls by ~20%.",
+            "Supported Salesforce integrations for secure customer data workflows.",
+          ],
+        },
+        {
+          title: "Full-Stack Developer – FinTech",
+          dates: "Dec 2020 – Aug 2022",
+          bullets: [
+            "Built and enhanced web apps with Java EE, PL/SQL, MyBatis, and jQuery for real-time data processing and reporting.",
+            "Created ImageRight document workflows to automate routing and improve auditability.",
+            "Delivered performant browser interfaces with HTML5/CSS3/AJAX and improved visual consistency for dashboards.",
+            "Authored batch scripts and automation to validate financial data and increase workflow reliability.",
+            "Practiced solid CI/CD with Git and Jenkins; collaborated in unit testing (JUnit) and code reviews.",
+          ],
+        },
+        {
+          title: "Software Engineer – Health Tech",
+          dates: "Jun 2019 – Dec 2020",
+          bullets: [
+            "Built Spring Boot REST APIs for healthcare data pipelines to improve uptime and interoperability.",
+            "Developed React front-end modules following accessible UI design and cross-browser best practices.",
+            "Maintained HIPAA-compliant data services on AWS (RDS/S3) following OWASP guidance.",
+            "Automated CI/CD with Jenkins and Docker, reducing manual release effort.",
+            "Profiled APIs and optimized code/queries to improve response times.",
+          ],
+        },
+      ];
 
-// ------------------
-// DATA – Contact
-// ------------------
-const CONTACT = {
-  email: "vinaysai9848@gmail.com",
-  phone: "+1 7404811358",
-  location: "United States",
-};
+      const SKILLS = {
+        "Frontend Frameworks": ["React", "Angular", "Vue", "Next.js", "Nuxt.js"],
+        "UI & Styling": ["TailwindCSS", "Material UI", "Bootstrap", "CSS Grid", "Flexbox"],
+        "Design Tools": ["Figma", "Adobe XD", "Sketch", "Storybook", "InVision"],
+        "State Management": ["Redux", "Context API", "NgRx", "Zustand"],
+        "Testing & QA": ["Jest", "Cypress", "Selenium", "Playwright", "Lighthouse"],
+        "Build & Deploy": ["Webpack", "Vite", "Docker", "Jenkins", "GitHub Actions"],
+        Animation: ["GSAP", "Framer Motion", "Lottie"],
+        "Data Visualization": ["D3.js", "Chart.js", "Highcharts"],
+      };
 
-// ------------------
-// UI Components
-// ------------------
-function Nav() {
-  const items = [
-    { href: "#work", label: "Work" },
-    { href: "#experience", label: "Experience" },
-    { href: "#skills", label: "Skills" },
-    { href: "#contact", label: "Contact" },
-  ];
-  return (
-    <div className="fixed top-0 left-0 right-0 z-40 backdrop-blur bg-white/70 border-b border-black/5">
-      <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
-        <a href="#top" className="font-semibold tracking-tight">{SITE.name}</a>
-        <nav className="hidden md:flex gap-6 text-sm">
-          {items.map((it) => (
-            <a key={it.href} href={it.href} className="hover:opacity-70">{it.label}</a>
-          ))}
-        </nav>
-        <div className="flex items-center gap-3">
-          {SITE.social.map((s) => (
-            <a key={s.label} href={s.href} className="p-2 rounded-xl border border-black/5 hover:bg-black/5" aria-label={s.label}>
-              {s.icon}
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
+      const CONTACT = {
+        email: "vinaysai9848@gmail.com",
+        phone: "+1 7404811358",
+        location: "United States",
+      };
 
-function Hero() {
-  return (
-    <section id="top" className="pt-28 pb-16 md:pt-32 md:pb-24 bg-gradient-to-b from-white to-slate-50">
-      <div className="mx-auto max-w-6xl px-4 grid md:grid-cols-12 gap-8">
-        <div className="md:col-span-7">
-          <div className="text-4xl md:text-6xl font-black leading-tight tracking-tight">
-            <span className="mr-2">⚛️</span> {SITE.name}
-          </div>
-          <p className="mt-2 text-slate-600">{SITE.role}</p>
-          <p className="mt-6 text-slate-700 leading-relaxed">{SITE.tagline}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            {SITE.ctas.map((c) => (
-              <a
-                key={c.href}
-                href={c.href}
-                className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
-              >
-                {c.label} <ArrowRight size={16} />
-              </a>
-            ))}
-          </div>
-        </div>
-        <div className="md:col-span-5">
-          <div className="grid grid-cols-2 gap-4">
-            {SITE.stats.map((s) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="rounded-2xl border border-black/5 bg-white p-5 shadow-sm"
-              >
-                <div className="text-3xl font-extrabold">{s.value}</div>
-                <div className="text-xs uppercase tracking-widest text-slate-500">{s.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+      function Nav() {
+        const items = [
+          { href: "#work", label: "Work" },
+          { href: "#experience", label: "Experience" },
+          { href: "#skills", label: "Skills" },
+          { href: "#contact", label: "Contact" },
+        ];
+        return (
+          React.createElement("div", { className: "fixed top-0 left-0 right-0 z-40 backdrop-blur bg-white/70 border-b border-black/5" },
+            React.createElement("div", { className: "mx-auto max-w-6xl px-4 h-16 flex items-center justify-between" },
+              React.createElement("a", { href: "#top", className: "font-semibold tracking-tight" }, SITE.name),
+              React.createElement("nav", { className: "hidden md:flex gap-6 text-sm" },
+                items.map((it) =>
+                  React.createElement("a", { key: it.href, href: it.href, className: "hover:opacity-70" }, it.label)
+                )
+              ),
+              React.createElement("div", { className: "flex items-center gap-3" },
+                SITE.social.map((s) =>
+                  React.createElement("a", { key: s.label, href: s.href, className: "p-2 rounded-xl border border-black/5 hover:bg-black/5", "aria-label": s.label },
+                    s.icon(18)
+                  )
+                )
+              )
+            )
+          )
+        );
+      }
 
-function ProjectCard({ p }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm hover:shadow-md transition-shadow"
-    >
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h3 className="text-lg font-bold">{p.title}</h3>
-          <p className="text-sm text-slate-500">{p.org}</p>
-        </div>
-      </div>
-      <p className="mt-3 text-sm text-slate-700">{p.blurb}</p>
-      <div className="mt-4 flex flex-wrap gap-2">
-        {p.tags.map((t) => (
-          <span key={t} className="text-xs rounded-full px-2 py-1 bg-slate-100 border border-black/5">
-            {t}
-          </span>
-        ))}
-      </div>
-      <div className="mt-4 flex flex-wrap gap-2">
-        {p.metrics.map((m) => (
-          <span key={m} className="text-xs rounded-full px-2 py-1 bg-black text-white">
-            {m}
-          </span>
-        ))}
-      </div>
-    </motion.div>
-  );
-}
+      function Hero() {
+        return (
+          React.createElement("section", { id: "top", className: "pt-28 pb-16 md:pt-32 md:pb-24 bg-gradient-to-b from-white to-slate-50" },
+            React.createElement("div", { className: "mx-auto max-w-6xl px-4 grid md:grid-cols-12 gap-8" },
+              React.createElement("div", { className: "md:col-span-7" },
+                React.createElement("div", { className: "text-4xl md:text-6xl font-black leading-tight tracking-tight" },
+                  React.createElement("span", { className: "mr-2" }, "⚛️ "), SITE.name
+                ),
+                React.createElement("p", { className: "mt-2 text-slate-600" }, SITE.role),
+                React.createElement("p", { className: "mt-6 text-slate-700 leading-relaxed" }, SITE.tagline),
+                React.createElement("div", { className: "mt-6 flex flex-wrap gap-3" },
+                  SITE.ctas.map((c) =>
+                    React.createElement("a", {
+                      key: c.href, href: c.href,
+                      className: "inline-flex items-center gap-2 rounded-2xl px-5 py-3 bg-black text-white hover:opacity-90"
+                    }, c.label, " ",
+                      React.createElement(ArrowRight, { size: 16 })
+                    )
+                  )
+                )
+              ),
+              React.createElement("div", { className: "md:col-span-5" },
+                React.createElement("div", { className: "grid grid-cols-2 gap-4" },
+                  SITE.stats.map((s) =>
+                    React.createElement(motion.div, {
+                      key: s.label,
+                      initial: { opacity: 0, y: 10 },
+                      whileInView: { opacity: 1, y: 0 },
+                      viewport: { once: true },
+                      className: "rounded-2xl border border-black/5 bg-white p-5 shadow-sm"
+                    },
+                      React.createElement("div", { className: "text-3xl font-extrabold" }, s.value),
+                      React.createElement("div", { className: "text-xs uppercase tracking-widest text-slate-500" }, s.label)
+                    )
+                  )
+                )
+              )
+            )
+          )
+        );
+      }
 
-function Work() {
-  return (
-    <section id="work" className="py-16 md:py-24 bg-white">
-      <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-2xl md:text-3xl font-extrabold">Featured Work</h2>
-        <p className="mt-2 text-slate-600">Real-world solutions that drove measurable outcomes.</p>
-        <div className="mt-8 grid sm:grid-cols-2 gap-6">
-          {PROJECTS.map((p) => (
-            <ProjectCard key={p.title} p={p} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+      function ProjectCard({ p }) {
+        return (
+          React.createElement(motion.div, {
+            initial: { opacity: 0, y: 16 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true },
+            className: "rounded-2xl border border-black/5 bg-white p-6 shadow-sm hover:shadow-md transition-shadow"
+          },
+            React.createElement("div", { className: "flex items-start justify-between gap-4" },
+              React.createElement("div", null,
+                React.createElement("h3", { className: "text-lg font-bold" }, p.title),
+                React.createElement("p", { className: "text-sm text-slate-500" }, p.org)
+              )
+            ),
+            React.createElement("p", { className: "mt-3 text-sm text-slate-700" }, p.blurb),
+            React.createElement("div", { className: "mt-4 flex flex-wrap gap-2" },
+              p.tags.map((t) =>
+                React.createElement("span", { key: t, className: "text-xs rounded-full px-2 py-1 bg-slate-100 border border-black/5" }, t)
+              )
+            ),
+            React.createElement("div", { className: "mt-4 flex flex-wrap gap-2" },
+              p.metrics.map((m) =>
+                React.createElement("span", { key: m, className: "text-xs rounded-full px-2 py-1 bg-black text-white" }, m)
+              )
+            )
+          )
+        );
+      }
 
-function ExperienceItem({ item }) {
-  return (
-    <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <div className="font-semibold">{item.title}</div>
-        </div>
-        <div className="text-sm text-slate-500">{item.dates}</div>
-      </div>
-      <ul className="mt-4 list-disc pl-5 space-y-2 text-sm text-slate-700">
-        {item.bullets.map((b, i) => (
-          <li key={i}>{b}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+      function Work() {
+        return (
+          React.createElement("section", { id: "work", className: "py-16 md:py-24 bg-white" },
+            React.createElement("div", { className: "mx-auto max-w-6xl px-4" },
+              React.createElement("h2", { className: "text-2xl md:text-3xl font-extrabold" }, "Featured Work"),
+              React.createElement("p", { className: "mt-2 text-slate-600" }, "Real-world solutions that drove measurable outcomes."),
+              React.createElement("div", { className: "mt-8 grid sm:grid-cols-2 gap-6" },
+                PROJECTS.map((p) => React.createElement(ProjectCard, { key: p.title, p }))
+              )
+            )
+          )
+        );
+      }
 
-function Experience() {
-  return (
-    <section id="experience" className="py-16 md:py-24 bg-slate-50">
-      <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-2xl md:text-3xl font-extrabold">Impact Highlights</h2>
-        <p className="mt-2 text-slate-600">Selected achievements and responsibilities (company‑agnostic).</p>
-        <div className="mt-8 grid gap-6">
-          {EXPERIENCE.map((e, idx) => (
-            <ExperienceItem key={idx} item={e} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+      function ExperienceItem({ item }) {
+        return (
+          React.createElement("div", { className: "rounded-2xl border border-black/5 bg-white p-6 shadow-sm" },
+            React.createElement("div", { className: "flex flex-wrap items-center justify-between gap-2" },
+              React.createElement("div", null,
+                React.createElement("div", { className: "font-semibold" }, item.title)
+              ),
+              React.createElement("div", { className: "text-sm text-slate-500" }, item.dates)
+            ),
+            React.createElement("ul", { className: "mt-4 list-disc pl-5 space-y-2 text-sm text-slate-700" },
+              item.bullets.map((b, i) => React.createElement("li", { key: i }, b))
+            )
+          )
+        );
+      }
 
-function Skills() {
-  return (
-    <section id="skills" className="py-16 md:py-24 bg-white">
-      <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-2xl md:text-3xl font-extrabold">Skills & Expertise</h2>
-        <p className="mt-2 text-slate-600">Comprehensive mastery of modern frontend technologies and design systems.</p>
-        <div className="mt-8 grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {Object.entries(SKILLS).map(([group, items]) => (
-            <div key={group} className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm">
-              <div className="text-sm font-semibold uppercase tracking-wider text-slate-500">{group}</div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {items.map((it) => (
-                  <span key={it} className="text-xs rounded-full px-2 py-1 bg-slate-100 border border-black/5">
-                    {it}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+      function Experience() {
+        return (
+          React.createElement("section", { id: "experience", className: "py-16 md:py-24 bg-slate-50" },
+            React.createElement("div", { className: "mx-auto max-w-6xl px-4" },
+              React.createElement("h2", { className: "text-2xl md:text-3xl font-extrabold" }, "Impact Highlights"),
+              React.createElement("p", { className: "mt-2 text-slate-600" }, "Selected achievements and responsibilities (company-agnostic)."),
+              React.createElement("div", { className: "mt-8 grid gap-6" },
+                EXPERIENCE.map((e, idx) => React.createElement(ExperienceItem, { key: idx, item: e }))
+              )
+            )
+          )
+        );
+      }
 
-function Contact() {
-  return (
-    <section id="contact" className="py-16 md:py-24 bg-slate-50">
-      <div className="mx-auto max-w-6xl px-4">
-        <h2 className="text-2xl md:text-3xl font-extrabold">Let's Build Something Great</h2>
-        <p className="mt-2 text-slate-600">Open to exciting opportunities and collaborations.</p>
-        <div className="mt-8 grid md:grid-cols-3 gap-6">
-          <a href={`mailto:${CONTACT.email}`} className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex items-start gap-3 hover:shadow-md">
-            <Mail />
-            <div>
-              <div className="font-semibold">Email Me</div>
-              <div className="text-sm text-slate-600">{CONTACT.email}</div>
-            </div>
-          </a>
-          <a href={`tel:${CONTACT.phone}`} className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex items-start gap-3 hover:shadow-md">
-            <Phone />
-            <div>
-              <div className="font-semibold">Call Me</div>
-              <div className="text-sm text-slate-600">{CONTACT.phone}</div>
-            </div>
-          </a>
-          <div className="rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex items-start gap-3">
-            <MapPin />
-            <div>
-              <div className="font-semibold">Location</div>
-              <div className="text-sm text-slate-600">{CONTACT.location}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+      function Skills() {
+        return (
+          React.createElement("section", { id: "skills", className: "py-16 md:py-24 bg-white" },
+            React.createElement("div", { className: "mx-auto max-w-6xl px-4" },
+              React.createElement("h2", { className: "text-2xl md:text-3xl font-extrabold" }, "Skills & Expertise"),
+              React.createElement("p", { className: "mt-2 text-slate-600" }, "Comprehensive mastery of modern frontend technologies and design systems."),
+              React.createElement("div", { className: "mt-8 grid sm:grid-cols-2 md:grid-cols-3 gap-6" },
+                Object.entries(SKILLS).map(([group, items]) =>
+                  React.createElement("div", { key: group, className: "rounded-2xl border border-black/5 bg-white p-6 shadow-sm" },
+                    React.createElement("div", { className: "text-sm font-semibold uppercase tracking-wider text-slate-500" }, group),
+                    React.createElement("div", { className: "mt-3 flex flex-wrap gap-2" },
+                      items.map((it) =>
+                        React.createElement("span", { key: it, className: "text-xs rounded-full px-2 py-1 bg-slate-100 border border-black/5" }, it)
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        );
+      }
 
-function Footer() {
-  return (
-    <footer className="py-10 border-t border-black/5 bg-white">
-      <div className="mx-auto max-w-6xl px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="text-sm text-slate-500">© {new Date().getFullYear()} {SITE.name}. All rights reserved.</div>
-        <div className="flex gap-3">
-          {SITE.social.map((s) => (
-            <a key={s.label} href={s.href} className="p-2 rounded-xl border border-black/5 hover:bg-black/5" aria-label={s.label}>
-              {s.icon}
-            </a>
-          ))}
-        </div>
-      </div>
-    </footer>
-  );
-}
+      function Contact() {
+        return (
+          React.createElement("section", { id: "contact", className: "py-16 md:py-24 bg-slate-50" },
+            React.createElement("div", { className: "mx-auto max-w-6xl px-4" },
+              React.createElement("h2", { className: "text-2xl md:text-3xl font-extrabold" }, "Let's Build Something Great"),
+              React.createElement("p", { className: "mt-2 text-slate-600" }, "Open to exciting opportunities and collaborations."),
+              React.createElement("div", { className: "mt-8 grid md:grid-cols-3 gap-6" },
+                React.createElement("a", { href: `mailto:${CONTACT.email}`, className: "rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex items-start gap-3 hover:shadow-md" },
+                  React.createElement(Mail, null),
+                  React.createElement("div", null,
+                    React.createElement("div", { className: "font-semibold" }, "Email Me"),
+                    React.createElement("div", { className: "text-sm text-slate-600" }, CONTACT.email)
+                  )
+                ),
+                React.createElement("a", { href: `tel:${CONTACT.phone}`, className: "rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex items-start gap-3 hover:shadow-md" },
+                  React.createElement(Phone, null),
+                  React.createElement("div", null,
+                    React.createElement("div", { className: "font-semibold" }, "Call Me"),
+                    React.createElement("div", { className: "text-sm text-slate-600" }, CONTACT.phone)
+                  )
+                ),
+                React.createElement("div", { className: "rounded-2xl border border-black/5 bg-white p-6 shadow-sm flex items-start gap-3" },
+                  React.createElement(MapPin, null),
+                  React.createElement("div", null,
+                    React.createElement("div", { className: "font-semibold" }, "Location"),
+                    React.createElement("div", { className: "text-sm text-slate-600" }, CONTACT.location)
+                  )
+                )
+              )
+            )
+          )
+        );
+      }
 
-// ------------------
-// Simple Runtime Smoke Tests (run in dev only)
-// ------------------
-function runSmokeTests() {
-  try {
-    const tests = [
-      {
-        name: "SITE has minimum fields",
-        pass: () => SITE && SITE.name && Array.isArray(SITE.ctas) && Array.isArray(SITE.stats),
-      },
-      {
-        name: "PROJECTS items have required keys",
-        pass: () => PROJECTS.every((p) => p.title && p.blurb && Array.isArray(p.tags)),
-      },
-      {
-        name: "EXPERIENCE bullets are non‑empty arrays",
-        pass: () => EXPERIENCE.every((e) => Array.isArray(e.bullets) && e.bullets.length > 0),
-      },
-      {
-        name: "SKILLS groups have arrays",
-        pass: () => Object.values(SKILLS).every((arr) => Array.isArray(arr)),
-      },
-      {
-        name: "CONTACT has email and phone",
-        pass: () => CONTACT.email && CONTACT.phone,
-      },
-      // --- Additional tests (non-breaking) ---
-      {
-        name: "PROJECTS metrics are arrays",
-        pass: () => PROJECTS.every((p) => Array.isArray(p.metrics)),
-      },
-      {
-        name: "EXPERIENCE dates are strings",
-        pass: () => EXPERIENCE.every((e) => typeof e.dates === "string" && e.dates.length > 0),
-      },
-      {
-        name: "SITE social entries have label+href",
-        pass: () => SITE.social.every((s) => s.label && typeof s.href === "string"),
-      },
-    ];
+      function Footer() {
+        return (
+          React.createElement("footer", { className: "py-10 border-t border-black/5 bg-white" },
+            React.createElement("div", { className: "mx-auto max-w-6xl px-4 flex flex-col md:flex-row items-center justify-between gap-4" },
+              React.createElement("div", { className: "text-sm text-slate-500" }, `© ${new Date().getFullYear()} ${SITE.name}. All rights reserved.`),
+              React.createElement("div", { className: "flex gap-3" },
+                SITE.social.map((s) =>
+                  React.createElement("a", { key: s.label, href: s.href, className: "p-2 rounded-xl border border-black/5 hover:bg-black/5", "aria-label": s.label },
+                    s.icon(18)
+                  )
+                )
+              )
+            )
+          )
+        );
+      }
 
-    tests.forEach((t) => {
-      const ok = Boolean(t.pass());
-      // eslint-disable-next-line no-console
-      console[ok ? "log" : "warn"](`[SMOKE] ${t.name}: ${ok ? "PASS" : "FAIL"}`);
-    });
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error("[SMOKE] Unexpected error while running tests", err);
-  }
-}
+      function App() {
+        return React.createElement(
+          React.Fragment,
+          null,
+          React.createElement(Nav, null),
+          React.createElement(Hero, null),
+          React.createElement(Work, null),
+          React.createElement(Experience, null),
+          React.createElement(Skills, null),
+          React.createElement(Contact, null),
+          React.createElement(Footer, null),
+        );
+      }
 
-// Guard for environments without Node's `process`
-const isDev = (typeof process !== "undefined" && process?.env?.NODE_ENV !== "production")
-  || (typeof window !== "undefined" && (window.location?.hostname === "localhost" || window.location?.hostname === "127.0.0.1"));
-
-if (isDev) {
-  try { runSmokeTests(); } catch (_) {}
-}
-
-export default function PortfolioNetlifyStyle() {
-  return (
-    <div className="text-slate-900 antialiased">
-      <Nav />
-      <Hero />
-      <Work />
-      <Experience />
-      <Skills />
-      <Contact />
-      <Footer />
-      <style>{`
-        html { scroll-behavior: smooth; }
-        body { background: white; }
-      `}</style>
-    </div>
-  );
-}
+      ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+    </script>
+  </body>
+</html>
